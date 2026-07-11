@@ -13,4 +13,8 @@ async def main():
 
 with client:
     client.loop.run_until_complete(main())
+    with client:
+    client.loop.run_until_complete(main())
+    client.run_until_disconnected()
+    
   
