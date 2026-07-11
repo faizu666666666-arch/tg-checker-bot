@@ -1,19 +1,19 @@
 import os
-from telethon.sync import TelegramClient
+from telethon import TelegramClient
+from telethon.sessions import StringSession
 
-# Load variables from Railway
+# Load variables
 api_id = os.environ.get('API_ID')
 api_hash = os.environ.get('API_HASH')
 string_session = os.environ.get('STRING_SESSION')
 
-# Create the client
-client = TelegramClient(string_session, api_id, api_hash)
+# Use StringSession to avoid file system errors
+client = TelegramClient(StringSession(string_session), api_id, api_hash)
 
 async def main():
     me = await client.get_me()
-    print(f"Bot logged in as: {me.first_name}")
+    print(f"Bot successfully logged in as: {me.first_name}")
 
-# This structure prevents crashes and keeps the bot running
 if __name__ == '__main__':
     with client:
         client.loop.run_until_complete(main())
